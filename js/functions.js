@@ -237,8 +237,20 @@ function validateForm() {
       );
       return false;
     } else {
-      document.getElementById("cantidadTotal").classList.remove("is-invalid");
-      document.getElementById("cantidadTotal").classList.add("is-valid");
+      // Expresión regular para validar si es un número entero o flotante
+      var numberPattern = /^-?\d+(\.\d+)?$/;
+
+      if (numberPattern.test(cantidadTotal)) {
+        document.getElementById("cantidadTotal").classList.remove("is-invalid");
+        document.getElementById("cantidadTotal").classList.add("is-valid");
+      } else {
+        document.getElementById("cantidadTotal").classList.add("is-invalid");
+        showAlert(
+          "La <strong>CANTIDAD TOTAL</strong> debe ser un numero",
+          "danger"
+        );
+        return false;
+      }
     }
   } else {
     if (cantidad === "" || cantidad.trim() === "") {
@@ -247,8 +259,20 @@ function validateForm() {
       showAlert("La <strong>CANTIDAD </strong> no puede estar vacia", "danger");
       return false;
     } else {
-      document.getElementById("cantidad").classList.remove("is-invalid");
-      document.getElementById("cantidad").classList.add("is-valid");
+      // Expresión regular para validar si es un número entero o flotante
+      var numberPattern = /^-?\d+(\.\d+)?$/;
+
+      if (numberPattern.test(cantidad)) {
+        document.getElementById("cantidad").classList.remove("is-invalid");
+        document.getElementById("cantidad").classList.add("is-valid");
+      } else {
+        document.getElementById("cantidadTotal").classList.add("is-invalid");
+        showAlert(
+          "La <strong>CANTIDAD TOTAL</strong> debe ser un numero",
+          "danger"
+        );
+        return false;
+      }
     }
   }
 
@@ -287,8 +311,21 @@ function validateForm() {
     );
     return false;
   } else {
-    document.getElementById("estandar").classList.remove("is-invalid");
-    document.getElementById("estandar").classList.add("is-valid");
+
+    // Expresión regular para validar si es un número entero o flotante
+    var numberPattern = /^-?\d+(\.\d+)?$/;
+    
+    if (numberPattern.test(estandar)) {
+      document.getElementById("estandar").classList.remove("is-invalid");
+      document.getElementById("estandar").classList.add("is-valid");
+    } else {
+      document.getElementById("cantidadTotal").classList.add("is-invalid");
+      showAlert(
+        "La <strong>CANTIDAD TOTAL</strong> debe ser un numero",
+        "danger"
+      );
+      return false;
+    }
   }
 
   if (parseInt(estandar, 10) > parseInt(cantidadTotal, 10)) {

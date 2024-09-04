@@ -52,12 +52,12 @@ function generateTags() {
 
   if (cantidad === "" && cantidadTotal !== "") {
     cantEtiquetas = Math.ceil(
-      parseInt(cantidadTotal, 10) / parseInt(estandar, 10)
+      parseFloat(cantidadTotal, 10) / parseFloat(estandar, 10)
     );
-    res = parseInt(cantidadTotal, 10);
+    res = parseFloat(cantidadTotal, 10);
   } else if (cantidadTotal === "" && cantidad !== "") {
     cantEtiquetas = 1;
-    res = parseInt(cantidad, 10);
+    res = parseFloat(cantidad, 10);
   }
 
   for (let i = invoice; i < invoice + cantEtiquetas; i++) {
@@ -232,7 +232,7 @@ function generateTags() {
       doc.setFontSize(8);
       doc.text(foliotext, 78, 46.5); // Asegúrate de ajustar estas coordenadas según tus necesidades
     }
-    res = res - parseInt(estandar, 10);
+    res = res - parseFloat(estandar, 10);
   }
 
   localStorage.setItem("Invoice", invoice + parseInt(cantEtiquetas, 10));
