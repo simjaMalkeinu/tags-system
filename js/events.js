@@ -1,11 +1,18 @@
 document.querySelectorAll("input").forEach(function (input) {
-  if (input.id !== "caducidad") {
+  if (input.id !== "caducidad" && input.id !== "includedDate") {
     input.addEventListener("input", generateQR);
+  }
+  if (input.id === "includedDate") {
+    input.addEventListener("input", showDate);
   }
 });
 
 document.querySelectorAll("select").forEach(function (select) {
-  if (select.id !== "area" && select.id !== "planta") {
+  if (
+    select.id !== "area" &&
+    select.id !== "planta" &&
+    select.id !== "includedDate"
+  ) {
     select.addEventListener("change", generateQR);
   }
 });

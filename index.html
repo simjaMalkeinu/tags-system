@@ -40,6 +40,7 @@
             </div>   
            </div>      
          </div>
+
          <!-- boton para leer eqtiqueta -->
           <div class="d-flex flex-row-reverse mb-3 gap-2">
             <button class="btn btn-success" onclick="readQRTag()" id="leerTag">
@@ -69,6 +70,12 @@
               <label for="rc">RC o CLAVE UEPS</label>
             </div>
 
+            <!-- Encabezado del lote -->
+            <div class="mt-4 d-flex justify-content-center">
+              <h5 class="col-md-4 text-center">Generacion de lote</h5>
+              <hr class="col-md-8" style="color: rgb(0, 132, 255);">
+            </div>
+
             <!-- fecha y turno input -->
             <div class="row" id="fechayturno">
               <div class="col">
@@ -93,6 +100,12 @@
                   <label for="turno">Turno</label>
                 </div>
               </div>
+            </div>
+
+            <!-- Incluir fecha -->
+            <div class="form-check form-switch mb-3" id="divIncDate">
+              <input class="form-check-input" type="checkbox" role="switch" id="includedDate" name="includedDate">
+              <label class="form-check-label" for="includedDate">Incluir fecha de impresion</label>
             </div>
 
             <!-- lote input -->
@@ -278,6 +291,8 @@
                 <span>QR CODE</span>
               </div>
             </div>
+            <div id="fechaView" class="text-center">
+            </div>
           </div>
         </div>
       </div>
@@ -302,7 +317,7 @@
 
     <script src="./js/librerias/bootstrap.bundle.min.js"></script>  
     
-    <script src="./jslibrerias/papaparse.min.js"></script>
+    <!-- <script src="./jslibrerias/papaparse.min.js"></script> -->
     <script src="./js/librerias/jspdf.umd.min.js"></script>
     <script src="./js/librerias/jspdf.plugin.autotable.js"></script>
 

@@ -23,6 +23,7 @@ function generateTags() {
     unidad,
     qrContainer,
     caducidadDate,
+    includedDate,
   } = getData();
 
   const validateRC = rc.length < 10 ? true : false;
@@ -182,6 +183,16 @@ function generateTags() {
               content: "CAD: " + caducidadDate,
               colSpan: 2,
               styles: { fontStyle: "bold", fontSize: fontSizeTag },
+            },
+          ])
+        : null;
+
+      includedDate
+        ? tagInfo.push([
+            {
+              content: "FECHA: " + obtenerFechaActual(),
+              colSpan: 2,
+              styles: { fontStyle: "bold", fontSize: fontSizeTag - 2 },
             },
           ])
         : null;

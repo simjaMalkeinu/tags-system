@@ -103,6 +103,7 @@ function readQRTag() {
   const leerTagbtn = document.getElementById("leerTag");
   const divCantidadTotal = document.getElementById("divCantidadTotal");
   const divCantidad = document.getElementById("divCantidad");
+  const divIncDate = document.getElementById("divIncDate");
 
   const divEstandar = document.getElementById("divEstandar");
 
@@ -110,6 +111,7 @@ function readQRTag() {
   formulario.reset();
 
   folio.hidden = !folio.hidden;
+  divIncDate.hidden = !divIncDate.hidden;
   registro.hidden = !registro.hidden;
   divEstandar.hidden = !divEstandar.hidden;
 
@@ -167,6 +169,7 @@ function getData() {
   let unidad = document.getElementById("unidad").value;
   let caducidad = document.getElementById("caducidad").value;
   let caducidadDate = document.getElementById("caducidadDate").value;
+  let includedDate = document.getElementById("includedDate").checked;
   const qrContainer = document.getElementById("qrContainer");
 
   rc = rc.trim();
@@ -193,6 +196,7 @@ function getData() {
     caducidad,
     caducidadDate,
     cantidadTotal,
+    includedDate,
   };
 }
 
@@ -413,8 +417,11 @@ function personalizarLote() {
 }
 
 function generateQR() {
-  const { rc, lote, cantidad, estandar, operacion, unidad } = getData();
+  const { rc, lote, cantidad, estandar, operacion, unidad, includedDate } =
+    getData();
   const qrContainer = document.getElementById("qrContainer");
+
+  console.log(includedDate);
 
   // Formatear los datos en el formato deseado
   // const qrText = `RC:${rc}\t LOTE:${lote}\t CANTIDAD:${cantidad}\t operacion:${operacion};`;
@@ -544,4 +551,44 @@ const removeClasses = () => {
     input.classList.remove("is-invalid");
     input.classList.remove("is-valid");
   });
+};
+
+const showDate = () => {
+  const { includedDate } = getData();
+
+  // Obtén la fecha actual
+  var today = new Date();
+
+  // Extrae el día, mes y año
+  var day = String(today.getDate()).padStart(2, "0");
+  var month = String(today.getMonth() + 1).padStart(2, "0"); // Enero es 0
+  var year = today.getFullYear();
+
+  // Formatea la fecha como dd/mm/aaaa
+  var formattedDate = day + "/" + month + "/" + year;
+
+  console.log(formattedDate);
+
+  if (includedDate) {
+    document.getElementById(
+      "fechaView"
+    ).innerHTML = `<h4><b>${formattedDate}<b/></h4>`;
+  } else {
+    document.getElementById("fechaView").innerHTML = "";
+  }
+};
+
+const obtenerFechaActual = () => {
+  // Obtén la fecha actual
+  var today = new Date();
+
+  // Extrae el día, mes y año
+  var day = String(today.getDate()).padStart(2, "0");
+  var month = String(today.getMonth() + 1).padStart(2, "0"); // Enero es 0
+  var year = today.getFullYear();
+
+  // Formatea la fecha como dd/mm/aaaa
+  var formattedDate = day + "/" + month + "/" + year;
+
+  return formattedDate;
 };
