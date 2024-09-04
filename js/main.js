@@ -24,6 +24,7 @@ function generateTags() {
     qrContainer,
     caducidadDate,
     includedDate,
+    includedSec,
   } = getData();
 
   const validateRC = rc.length < 10 ? true : false;
@@ -49,6 +50,8 @@ function generateTags() {
 
   let cantEtiquetas = 0;
   let res = 0;
+
+  let secuencia = 1;
 
   if (cantidad === "" && cantidadTotal !== "") {
     cantEtiquetas = Math.ceil(
@@ -231,8 +234,10 @@ function generateTags() {
       // Añade el texto y el QR en cada página
       doc.setFontSize(8);
       doc.text(foliotext, 78, 46.5); // Asegúrate de ajustar estas coordenadas según tus necesidades
+      doc.text(`${secuencia + " de " + cantEtiquetas}`, 50, 48);
     }
     res = res - parseFloat(estandar, 10);
+    secuencia += 1;
   }
 
   localStorage.setItem("Invoice", invoice + parseInt(cantEtiquetas, 10));

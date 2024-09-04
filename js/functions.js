@@ -170,6 +170,7 @@ function getData() {
   let caducidad = document.getElementById("caducidad").value;
   let caducidadDate = document.getElementById("caducidadDate").value;
   let includedDate = document.getElementById("includedDate").checked;
+  let includedSec = document.getElementById("includedSec").checked;
   const qrContainer = document.getElementById("qrContainer");
 
   rc = rc.trim();
@@ -197,6 +198,7 @@ function getData() {
     caducidadDate,
     cantidadTotal,
     includedDate,
+    includedSec,
   };
 }
 
@@ -311,10 +313,9 @@ function validateForm() {
     );
     return false;
   } else {
-
     // Expresión regular para validar si es un número entero o flotante
     var numberPattern = /^-?\d+(\.\d+)?$/;
-    
+
     if (numberPattern.test(estandar)) {
       document.getElementById("estandar").classList.remove("is-invalid");
       document.getElementById("estandar").classList.add("is-valid");
@@ -454,7 +455,7 @@ function personalizarLote() {
 }
 
 function generateQR() {
-  const { rc, lote, cantidad, estandar, operacion, unidad, includedDate } =
+  const { rc, lote, cantidad, estandar, operacion, unidad, includedDate, cantidadTotal } =
     getData();
   const qrContainer = document.getElementById("qrContainer");
 
@@ -471,6 +472,22 @@ function generateQR() {
   document.getElementById("tagQty").innerText =
     estandar === "" ? cantidad : estandar + " " + unidad;
   document.getElementById("tagOp").innerText = operacion;
+
+  let secDate = "";
+
+  // Asegúrate de que ambos valores sean numéricos antes de realizar la operación
+  if (cantidadTotal !== "" && estandar !== "") {
+    // Intenta convertir ambos valores a números flotantes
+    let cantidadTotalNum = parseFloat(cantidadTotal);
+    let estandarNum = parseFloat(estandar);
+
+    // Verifica si las conversiones son válidas
+    if (!isNaN(cantidadTotalNum) && !isNaN(estandarNum)) {
+      // Realiza la operación solo si ambos son números válidos
+      secDate = Math.ceil(cantidadTotalNum / estandarNum);
+      document.getElementById("endDiv").innerHTML = secDate;
+    } 
+  }
 
   // Generar QR
 
@@ -593,26 +610,23 @@ const removeClasses = () => {
 const showDate = () => {
   const { includedDate } = getData();
 
-  // Obtén la fecha actual
-  var today = new Date();
-
-  // Extrae el día, mes y año
-  var day = String(today.getDate()).padStart(2, "0");
-  var month = String(today.getMonth() + 1).padStart(2, "0"); // Enero es 0
-  var year = today.getFullYear();
-
   // Formatea la fecha como dd/mm/aaaa
-  var formattedDate = day + "/" + month + "/" + year;
+  var formattedDate = obtenerFechaActual();
 
   console.log(formattedDate);
 
   if (includedDate) {
     document.getElementById(
       "fechaView"
-    ).innerHTML = `<h4><b>${formattedDate}<b/></h4>`;
+    ).innerHTML = `<h4><b>${formattedDate}</b></h4>`;
   } else {
     document.getElementById("fechaView").innerHTML = "";
   }
+};
+
+const showSec = () => {
+  document.getElementById("secView").hidden =
+    !document.getElementById("secView").hidden;
 };
 
 const obtenerFechaActual = () => {

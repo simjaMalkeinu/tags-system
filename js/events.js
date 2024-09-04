@@ -1,9 +1,12 @@
 document.querySelectorAll("input").forEach(function (input) {
-  if (input.id !== "caducidad" && input.id !== "includedDate") {
+  if (input.id !== "caducidad" && input.id !== "includedDate" && input.id !== "includedSec") {
     input.addEventListener("input", generateQR);
   }
   if (input.id === "includedDate") {
     input.addEventListener("input", showDate);
+  }
+  if (input.id === "includedSec") {
+    input.addEventListener("input", showSec);
   }
 });
 
