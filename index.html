@@ -103,7 +103,7 @@
             </div>
 
             <!-- Incluir fecha -->
-            <div class="form-check form-switch mb-3" id="divIncDate">
+            <div class="form-check form-switch mb-3" id="divIncDate" hidden>
               <input class="form-check-input" type="checkbox" role="switch" id="includedDate" name="includedDate">
               <label class="form-check-label" for="includedDate">Incluir fecha de impresion</label>
             </div>
@@ -233,10 +233,16 @@
             </div>     
             
              <!-- Incluir Secuencial -->
-             <div class="form-check form-switch mb-3" id="divIncSec">
+             <div class="form-check form-switch mb-3" id="divIncSec" hidden>
               <input class="form-check-input" type="checkbox" role="switch" id="includedSec" name="includedSec">
               <label class="form-check-label" for="includedDate">Incluir secuencial de etiquetado</label>
             </div>
+
+            <!-- input para el numero de etiquetas -->
+            <div class="form-floating mb-3" id="secView" hidden>
+              <textarea name="observaciones" class="form-control" id="observaciones" name="observaciones" rows="2" placeholder="2 / T0460-1"></textarea>
+              <label for="floatingInput">observaciones</label>
+            </div>  
 
             <button type="submit" class="btn btn-primary">
               Generar etiquetas
@@ -298,10 +304,7 @@
               </div>
             </div>
             <div class="card-footer row">
-              <div id="fechaView" class="text-center col-md-7">
-              </div>
-              <div id="secView" class="col-md-5 text-center" hidden>
-                <h5><b>1</b> a <b id="endDiv"> ...</b></h5>
+              <div id="fechaView" class="text-center">
               </div>
             </div>
           </div>

@@ -169,6 +169,7 @@ function getData() {
   let unidad = document.getElementById("unidad").value;
   let caducidad = document.getElementById("caducidad").value;
   let caducidadDate = document.getElementById("caducidadDate").value;
+  let observaciones = document.getElementById("observaciones").value;
   let includedDate = document.getElementById("includedDate").checked;
   let includedSec = document.getElementById("includedSec").checked;
   const qrContainer = document.getElementById("qrContainer");
@@ -183,6 +184,7 @@ function getData() {
   caducidad = caducidad.trim();
   caducidadDate = caducidadDate.trim();
   cantidadTotal = cantidadTotal.trim();
+  observaciones = observaciones.trim();
 
   return {
     rc,
@@ -199,6 +201,7 @@ function getData() {
     cantidadTotal,
     includedDate,
     includedSec,
+    observaciones
   };
 }
 
@@ -398,12 +401,18 @@ function getDateData() {
 function activateOperation() {
   const rc = document.getElementById("rc").value;
   const operacion = document.getElementById("op");
+  const divIncDate = document.getElementById("divIncDate");
+  const divIncSec = document.getElementById("divIncSec");
 
   if (rc.length <= 8) {
     operacion.disabled = false;
+    divIncDate.hidden = true;
+    divIncSec.hidden = true;
     document.getElementById("tagTitle").innerText = "RC";
   } else {
     operacion.disabled = true;
+    divIncDate.hidden = false;
+    divIncSec.hidden = false;
     document.getElementById("tagTitle").innerText = "UEPS";
   }
 }

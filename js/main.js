@@ -25,6 +25,7 @@ function generateTags() {
     caducidadDate,
     includedDate,
     includedSec,
+    observaciones
   } = getData();
 
   const validateRC = rc.length < 10 ? true : false;
@@ -116,7 +117,7 @@ function generateTags() {
       doc.setFontSize(12);
 
       let titleTag = validateRC ? "RC:" : "UEPS:";
-      const fontSizeTag = validateRC ? 12 : 15;
+      const fontSizeTag = includedDate ? 12 : 15;
       // Datos de la etiqueta
       var tagInfo = [
         [
@@ -234,7 +235,13 @@ function generateTags() {
       // Añade el texto y el QR en cada página
       doc.setFontSize(8);
       doc.text(foliotext, 78, 46.5); // Asegúrate de ajustar estas coordenadas según tus necesidades
-      doc.text(`${secuencia + " de " + cantEtiquetas}`, 50, 48);
+
+      if (includedSec) {
+        doc.text(`${secuencia + " de " + cantEtiquetas}`, 50, 48);
+        doc.text(`${"Observaciones: " + observaciones}`, 2, 48);
+        
+      }
+
     }
     res = res - parseFloat(estandar, 10);
     secuencia += 1;
