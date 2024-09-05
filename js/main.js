@@ -25,7 +25,7 @@ function generateTags() {
     caducidadDate,
     includedDate,
     includedSec,
-    observaciones
+    observaciones,
   } = getData();
 
   const validateRC = rc.length < 10 ? true : false;
@@ -233,15 +233,21 @@ function generateTags() {
       doc.rect(60, 42, 16, 7);
 
       // Añade el texto y el QR en cada página
-      doc.setFontSize(8);
+      doc.setFontSize(10);
       doc.text(foliotext, 78, 46.5); // Asegúrate de ajustar estas coordenadas según tus necesidades
 
       if (includedSec) {
-        doc.text(`${secuencia + " de " + cantEtiquetas}`, 50, 48);
-        doc.text(`${"Observaciones: " + observaciones}`, 2, 48);
-        
-      }
+        const leyenda = `${
+          secuencia + " de " + cantEtiquetas
+        } / ${observaciones}`;
+        const longitud = Math.ceil(leyenda.length / 2);
+        const centrado = Math.ceil(57 / 2 - longitud) - 5;
 
+        console.log(leyenda, leyenda.length, longitud, centrado);
+
+        doc.text(leyenda, centrado, 48);
+        // doc.text(`${"Observaciones: " + observaciones}`, 2, 48);
+      }
     }
     res = res - parseFloat(estandar, 10);
     secuencia += 1;
