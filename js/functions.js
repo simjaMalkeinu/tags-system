@@ -170,6 +170,7 @@ function getData() {
   let caducidad = document.getElementById("caducidad").value;
   let caducidadDate = document.getElementById("caducidadDate").value;
   let observaciones = document.getElementById("observaciones").value;
+  let fechaReceive = document.getElementById("fechaReceive").value;
   let includedDate = document.getElementById("includedDate").checked;
   let includedSec = document.getElementById("includedSec").checked;
   const qrContainer = document.getElementById("qrContainer");
@@ -185,6 +186,7 @@ function getData() {
   caducidadDate = caducidadDate.trim();
   cantidadTotal = cantidadTotal.trim();
   observaciones = observaciones.trim();
+  fechaReceive = fechaReceive.trim();
 
   return {
     rc,
@@ -201,14 +203,15 @@ function getData() {
     cantidadTotal,
     includedDate,
     includedSec,
-    observaciones
+    observaciones,
+    fechaReceive,
   };
 }
 
 function validateForm() {
   // Obtén los valores del formulario
 
-  const { rc, lote, cantidad, cantidadTotal, operacion, estandar } = getData();
+  const { rc, lote, cantidad, cantidadTotal, operacion, estandar, includedDate, fechaReceive } = getData();
 
   if (rc === "" || rc.trim() === "") {
     document.getElementById("rc").classList.add("is-invalid");
@@ -222,6 +225,20 @@ function validateForm() {
   if (!numPartList.includes(rc)) {
     showAlert("La clave <strong>RC o UEPS</strong> no existe", "danger");
     return false;
+  }
+
+  if (includedDate && fechaReceive === "") {
+    document.getElementById("fechaReceive").classList.remove("is-valid");
+    document.getElementById("fechaReceive").classList.add("is-invalid");
+
+    showAlert(
+      "La <strong>La fecha de recibimiento</strong> no puede estar vacia si se va a incluir",
+      "danger"
+    );
+    return false;
+  } else {
+    document.getElementById("fechaReceive").classList.remove("is-invalid");
+    document.getElementById("fechaReceive").classList.add("is-valid");
   }
 
   if (lote === "" || lote.trim() === "") {
@@ -344,11 +361,14 @@ function validateForm() {
     document.getElementById("estandar").classList.add("is-valid");
   }
 
+  
+
   return true;
 }
 
 function setMaxDate() {
   const date = document.getElementById("fecha");
+  const fechaReceive = document.getElementById("fechaReceive");
   // Obtén la fecha actual
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -360,6 +380,7 @@ function setMaxDate() {
 
   // Establece el valor máximo permitido
   date.max = maxDate;
+  fechaReceive.max = maxDate;
 }
 
 function getDateData() {
@@ -464,8 +485,17 @@ function personalizarLote() {
 }
 
 function generateQR() {
-  const { rc, lote, cantidad, estandar, operacion, unidad, includedDate, cantidadTotal } =
-    getData();
+  const {
+    rc,
+    lote,
+    cantidad,
+    estandar,
+    operacion,
+    unidad,
+    includedDate,
+    cantidadTotal,
+    fechaReceive,
+  } = getData();
   const qrContainer = document.getElementById("qrContainer");
 
   console.log(includedDate);
@@ -482,20 +512,15 @@ function generateQR() {
     estandar === "" ? cantidad : estandar + " " + unidad;
   document.getElementById("tagOp").innerText = operacion;
 
-  let secDate = "";
+  // Formatea la fecha como dd/mm/aaaa
+  var formattedDate = obtenerFechaImp(fechaReceive);
 
-  // Asegúrate de que ambos valores sean numéricos antes de realizar la operación
-  if (cantidadTotal !== "" && estandar !== "") {
-    // Intenta convertir ambos valores a números flotantes
-    let cantidadTotalNum = parseFloat(cantidadTotal);
-    let estandarNum = parseFloat(estandar);
-
-    // Verifica si las conversiones son válidas
-    if (!isNaN(cantidadTotalNum) && !isNaN(estandarNum)) {
-      // Realiza la operación solo si ambos son números válidos
-      secDate = Math.ceil(cantidadTotalNum / estandarNum);
-      document.getElementById("endDiv").innerHTML = secDate;
-    } 
+  if (includedDate && fechaReceive !== "") {
+    document.getElementById(
+      "fechaView"
+    ).innerHTML = `<h4><b>${formattedDate}</b></h4>`;
+  } else {
+    document.getElementById("fechaView").innerHTML = "";
   }
 
   // Generar QR
@@ -617,20 +642,8 @@ const removeClasses = () => {
 };
 
 const showDate = () => {
-  const { includedDate } = getData();
-
-  // Formatea la fecha como dd/mm/aaaa
-  var formattedDate = obtenerFechaActual();
-
-  console.log(formattedDate);
-
-  if (includedDate) {
-    document.getElementById(
-      "fechaView"
-    ).innerHTML = `<h4><b>${formattedDate}</b></h4>`;
-  } else {
-    document.getElementById("fechaView").innerHTML = "";
-  }
+  document.getElementById("divfechaReceive").hidden =
+    !document.getElementById("divfechaReceive").hidden;
 };
 
 const showSec = () => {
@@ -638,17 +651,24 @@ const showSec = () => {
     !document.getElementById("secView").hidden;
 };
 
-const obtenerFechaActual = () => {
-  // Obtén la fecha actual
-  var today = new Date();
+const obtenerFechaImp = (fecha = "01/01/2000") => {
+  // Crear un objeto Date a partir de la fecha proporcionada
+  var nuevaFecha = new Date(fecha);
 
-  // Extrae el día, mes y año
-  var day = String(today.getDate()).padStart(2, "0");
-  var month = String(today.getMonth() + 1).padStart(2, "0"); // Enero es 0
-  var year = today.getFullYear();
+  // Sumar un día
+  nuevaFecha.setDate(nuevaFecha.getDate() + 1);
 
-  // Formatea la fecha como dd/mm/aaaa
+  // Extraer día, mes y año
+  var day = String(nuevaFecha.getDate()).padStart(2, "0");
+  var month = String(nuevaFecha.getMonth() + 1).padStart(2, "0"); // Enero es 0
+  var year = nuevaFecha.getFullYear();
+
+  // Formatear la fecha como dd/mm/aaaa
   var formattedDate = day + "/" + month + "/" + year;
 
   return formattedDate;
 };
+
+// console.log(sumarUnDia("01/01/2000")); // Resultado: 02/01/2000
+
+

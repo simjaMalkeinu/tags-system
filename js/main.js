@@ -26,6 +26,7 @@ function generateTags() {
     includedDate,
     includedSec,
     observaciones,
+    fechaReceive
   } = getData();
 
   const validateRC = rc.length < 10 ? true : false;
@@ -194,7 +195,7 @@ function generateTags() {
       includedDate
         ? tagInfo.push([
             {
-              content: "FECHA: " + obtenerFechaActual(),
+              content: "FECHA: " + obtenerFechaImp(fechaReceive),
               colSpan: 2,
               styles: { fontStyle: "bold", fontSize: fontSizeTag - 2 },
             },
