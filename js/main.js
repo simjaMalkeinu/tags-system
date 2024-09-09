@@ -118,7 +118,7 @@ function generateTags() {
       doc.setFontSize(12);
 
       let titleTag = validateRC ? "RC:" : "UEPS:";
-      const fontSizeTag = includedDate ? 12 : 15;
+      const fontSizeTag = 12;
       // Datos de la etiqueta
       var tagInfo = [
         [
@@ -130,7 +130,7 @@ function generateTags() {
         ],
         [
           {
-            content: "Lote: ",
+            content: "Lote:",
             styles: {
               fontStyle: "normal",
               fontSize: fontSizeTag,
@@ -168,7 +168,7 @@ function generateTags() {
       operacion !== ""
         ? tagInfo.push([
             {
-              content: "Operación: ",
+              content: "Operación:",
               styles: {
                 fontStyle: "normal",
                 fontSize: fontSizeTag,
