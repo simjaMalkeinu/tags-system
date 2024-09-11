@@ -211,7 +211,16 @@ function getData() {
 function validateForm() {
   // Obtén los valores del formulario
 
-  const { rc, lote, cantidad, cantidadTotal, operacion, estandar, includedDate, fechaReceive } = getData();
+  const {
+    rc,
+    lote,
+    cantidad,
+    cantidadTotal,
+    operacion,
+    estandar,
+    includedDate,
+    fechaReceive,
+  } = getData();
 
   if (rc === "" || rc.trim() === "") {
     document.getElementById("rc").classList.add("is-invalid");
@@ -361,8 +370,6 @@ function validateForm() {
     document.getElementById("estandar").classList.add("is-valid");
   }
 
-  
-
   return true;
 }
 
@@ -424,16 +431,31 @@ function activateOperation() {
   const operacion = document.getElementById("op");
   const divIncDate = document.getElementById("divIncDate");
   const divIncSec = document.getElementById("divIncSec");
+  const divfechaReceive = document.getElementById("divfechaReceive");
+  const secView = document.getElementById("secView");
+  const includedDate = document.getElementById("includedDate");
+  const includedSec = document.getElementById("includedSec");
 
   if (rc.length <= 8) {
     operacion.disabled = false;
     divIncDate.hidden = true;
     divIncSec.hidden = true;
+    divfechaReceive.hidden = true;
+    secView.hidden = true;
+
+    includedDate.checked = false;
+    includedSec.checked = false;
+
     document.getElementById("tagTitle").innerText = "RC";
   } else {
     operacion.disabled = true;
     divIncDate.hidden = false;
     divIncSec.hidden = false;
+    includedDate.checked
+      ? (divfechaReceive.hidden = false)
+      : (divfechaReceive.hidden = true);
+
+    includedSec.checked ? (secView.hidden = false) : (secView.hidden = true);
     document.getElementById("tagTitle").innerText = "UEPS";
   }
 }
@@ -644,11 +666,13 @@ const removeClasses = () => {
 const showDate = () => {
   document.getElementById("divfechaReceive").hidden =
     !document.getElementById("divfechaReceive").hidden;
+  document.getElementById("fechaReceive").value = "";
 };
 
 const showSec = () => {
   document.getElementById("secView").hidden =
     !document.getElementById("secView").hidden;
+  document.getElementById("observaciones").value = "";
 };
 
 const obtenerFechaImp = (fecha = "01/01/2000") => {
@@ -670,5 +694,3 @@ const obtenerFechaImp = (fecha = "01/01/2000") => {
 };
 
 // console.log(sumarUnDia("01/01/2000")); // Resultado: 02/01/2000
-
-

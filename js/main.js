@@ -168,7 +168,7 @@ function generateTags() {
       operacion !== ""
         ? tagInfo.push([
             {
-              content: "Operación:",
+              content: "Op:",
               styles: {
                 fontStyle: "normal",
                 fontSize: fontSizeTag,
@@ -220,8 +220,8 @@ function generateTags() {
           fillColor: [245, 245, 245],
         },
         columnStyles: {
-          0: { cellWidth: operacion === "" ? 18 : 26 },
-          1: { cellWidth: operacion === "" ? 37 : 29 },
+          0: { cellWidth: 15 },
+          1: { cellWidth: 40 },
         },
       });
 
