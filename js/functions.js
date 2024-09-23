@@ -266,7 +266,7 @@ function validateForm() {
     document.getElementById("lote").classList.add("is-valid");
   }
 
-  if (!activar) {
+  if (activar === false) {
     if (cantidadTotal === "" || cantidadTotal.trim() === "") {
       document.getElementById("cantidadTotal").classList.add("is-invalid");
       showAlert(
@@ -306,7 +306,7 @@ function validateForm() {
       } else {
         document.getElementById("cantidadTotal").classList.add("is-invalid");
         showAlert(
-          "La <strong>CANTIDAD TOTAL</strong> debe ser un numero",
+          "La <strong>CANTIDAD</strong> debe ser un numero",
           "danger"
         );
         return false;
@@ -348,22 +348,23 @@ function validateForm() {
       "danger"
     );
     return false;
-  } else {
-    // Expresión regular para validar si es un número entero o flotante
-    var numberPattern = /^-?\d+(\.\d+)?$/;
+  } 
+  // else {
+  //   // Expresión regular para validar si es un número entero o flotante
+  //   var numberPattern = /^-?\d+(\.\d+)?$/;
 
-    if (numberPattern.test(estandar)) {
-      document.getElementById("estandar").classList.remove("is-invalid");
-      document.getElementById("estandar").classList.add("is-valid");
-    } else {
-      document.getElementById("cantidadTotal").classList.add("is-invalid");
-      showAlert(
-        "La <strong>CANTIDAD TOTAL</strong> debe ser un numero",
-        "danger"
-      );
-      return false;
-    }
-  }
+  //   if (numberPattern.test(estandar)) {
+  //     document.getElementById("estandar").classList.remove("is-invalid");
+  //     document.getElementById("estandar").classList.add("is-valid");
+  //   } else {
+  //     document.getElementById("cantidadTotal").classList.add("is-invalid");
+  //     showAlert(
+  //       "La <strong>CANTIDAD TOTAL</strong> debe ser un numero",
+  //       "danger"
+  //     );
+  //     return false;
+  //   }
+  // }
 
   if (parseInt(estandar, 10) > parseInt(cantidadTotal, 10)) {
     document.getElementById("estandar").classList.add("is-invalid");
