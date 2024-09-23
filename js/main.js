@@ -97,7 +97,7 @@ function generateTags() {
       QRInfo = `${prefijo}${fj}-${(i + 1)
         .toString()
         .padStart(4, "0")}\t ${qrText}`;
-      foliotext = `${prefijo}${fj}-${(i + 1).toString().padStart(3, "0")}`;
+      foliotext = `${prefijo}${fj}-${(i + 1).toString().padStart(4, "0")}`;
     }
 
     new QRCode(qrContainer, {
@@ -234,8 +234,8 @@ function generateTags() {
       doc.rect(60, 42, 16, 7);
 
       // Añade el texto y el QR en cada página
-      doc.setFontSize(10);
-      doc.text(foliotext, 78, 46.5); // Asegúrate de ajustar estas coordenadas según tus necesidades
+      doc.setFontSize(9);
+      doc.text(foliotext, 77, 46.5); // Asegúrate de ajustar estas coordenadas según tus necesidades
 
       if (includedSec) {
         const leyenda = `${

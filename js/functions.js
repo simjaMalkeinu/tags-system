@@ -97,9 +97,9 @@ function readQRTag() {
   const lote = document.getElementById("lote");
   const rc = document.getElementById("rc");
   const button_generar = document.getElementById("button-generar");
+  const button_personalizar = document.getElementById("button-personalizar");
   const btnAddCaducidad = document.getElementById("btnAddCaducidad");
   const operacion = document.getElementById("op");
-  const button_personalizar = document.getElementById("button-personalizar");
   const leerTagbtn = document.getElementById("leerTag");
   const divCantidadTotal = document.getElementById("divCantidadTotal");
   const divCantidad = document.getElementById("divCantidad");
@@ -111,18 +111,13 @@ function readQRTag() {
   formulario.reset();
 
   folio.hidden = !folio.hidden;
-  divIncDate.hidden = !divIncDate.hidden;
   registro.hidden = !registro.hidden;
   divEstandar.hidden = !divEstandar.hidden;
 
   divCantidadTotal.hidden = !divCantidadTotal.hidden;
   divCantidad.hidden = !divCantidad.hidden;
 
-  fechayturno.hidden = !fechayturno.hidden;
-  lote.disabled = !lote.disabled;
-  button_generar.disabled = !button_generar.disabled;
   btnAddCaducidad.disabled = !btnAddCaducidad.disabled;
-  button_personalizar.disabled = !button_personalizar.disabled;
 
   if (!activar) {
     rc.removeEventListener("input", activateOperation);
@@ -133,10 +128,22 @@ function readQRTag() {
       ? (btnAddCaducidad.innerHTML = "Incluir Caducidad")
       : (btnAddCaducidad.innerHTML = "Quitar Caducidad");
     leerTagbtn.innerHTML = "Generar etiquetas";
+    divIncDate.hidden = true;
+    lote.disabled = false;
+    fechayturno.hidden = true;
+
+    button_generar.hidden = true;
+    button_personalizar.hidden = true;
+    button_generar.disabled = false;
+    button_personalizar.disabled = false;
   } else {
     rc.addEventListener("input", activateOperation);
     rc.addEventListener("input", changeLot);
     leerTagbtn.innerHTML = "Leer Etiqueta";
+    lote.disabled = true;
+    fechayturno.hidden = false;
+    button_generar.hidden = false;
+    button_personalizar.hidden = false;
   }
   activar = !activar;
 }
