@@ -644,7 +644,7 @@ const validateNumPart = () => {
   }
 
   // Verifica si el valor está en la lista de datos
-  if (numPartList.includes(rcValue)) {
+  if (numPartList.includes(rcValue.trim())) {
     validationMessage.textContent = "El numero de parte si existe";
     validationMessage.style.color = "green";
     if (!rcInput.classList.contains("is-valid")) {
