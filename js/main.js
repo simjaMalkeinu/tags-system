@@ -26,7 +26,7 @@ function generateTags() {
     includedDate,
     includedSec,
     observaciones,
-    fechaReceive
+    fechaReceive,
   } = getData();
 
   const validateRC = rc.length < 10 ? true : false;
@@ -74,11 +74,11 @@ function generateTags() {
     // const qrText = `RC:${rc}\t LOTE:${lote}\t CANTIDAD:${cantidad}\t operacion:${operacion};`;
 
     if (cantidadTotal !== "") {
-      qrText = `${rc}\t ${lote}\t ${
+      qrText = `${rc}\t${lote}\t${
         res >= estandar ? estandar : res
-      }\t ${unidad}\t ${operacion}\t`;
+      }\t${unidad}\t${operacion}\t`;
     } else {
-      qrText = `${rc}\t ${lote}\t ${cantidad}\t ${unidad}\t ${operacion}\t`;
+      qrText = `${rc}\t${lote}\t${cantidad}\t${unidad}\t${operacion}\t`;
     }
 
     folio !== "" ? (cont += 1) : null;
@@ -90,13 +90,13 @@ function generateTags() {
 
     if (folio !== "") {
       //console.log(eval(num[1]) + i);
-      QRInfo = `${folio}-${String.fromCharCode(code + cont)}\t ${qrText}`;
+      QRInfo = `${folio}-${String.fromCharCode(code + cont)}\t${qrText}`;
       foliotext = `${folio}-${String.fromCharCode(code + cont)}`;
     } else {
       // Agrega un identificador único al texto del QR para cada caja
       QRInfo = `${prefijo}${fj}-${(i + 1)
         .toString()
-        .padStart(4, "0")}\t ${qrText}`;
+        .padStart(4, "0")}\t${qrText}`;
       foliotext = `${prefijo}${fj}-${(i + 1).toString().padStart(4, "0")}`;
     }
 
