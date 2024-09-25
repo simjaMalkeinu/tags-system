@@ -38,17 +38,9 @@ function generateTags() {
     format: [pageWidth, pageHeight],
   });
 
-  if (folio !== "") {
-    let num = folio;
-    num = num.split("-");
-    console.log(num[1]);
-  }
-
   let prefijo = localStorage.getItem("area");
 
   let invoice = parseInt(localStorage.getItem("Invoice"), 10);
-
-  let cont = 0;
 
   let cantEtiquetas = 0;
   let res = 0;
@@ -81,8 +73,6 @@ function generateTags() {
       qrText = `${rc}\t${lote}\t${cantidad}\t${unidad}\t${operacion}\t`;
     }
 
-    folio !== "" ? (cont += 1) : null;
-
     let fj = obtenerFechaJuliana(today);
     let foliotext = "";
 
@@ -90,8 +80,12 @@ function generateTags() {
 
     if (folio !== "") {
       //console.log(eval(num[1]) + i);
-      QRInfo = `${folio}-${String.fromCharCode(code + cont)}\t${qrText}`;
-      foliotext = `${folio}-${String.fromCharCode(code + cont)}`;
+      let num = folio;
+      num = num.split("-");
+      console.log(num[1]); // 0005B
+
+      QRInfo = `${num[0]}-${agregarLetraConsecutiva(num[1])}\t${qrText}`;
+      foliotext = `${num[0]}-${agregarLetraConsecutiva(num[1])}`;
     } else {
       // Agrega un identificador único al texto del QR para cada caja
       QRInfo = `${prefijo}${fj}-${(i + 1)
@@ -238,9 +232,7 @@ function generateTags() {
       doc.text(foliotext, 77, 46.5); // Asegúrate de ajustar estas coordenadas según tus necesidades
 
       if (includedSec) {
-        const leyenda = `${
-          secuencia + " de " + cantEtiquetas
-        } / ${observaciones}`;
+        const leyenda = `${observaciones}`;
         const longitud = Math.ceil(leyenda.length / 2);
         const centrado = Math.ceil(57 / 2 - longitud) - 5;
 

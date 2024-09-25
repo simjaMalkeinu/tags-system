@@ -104,6 +104,8 @@ function readQRTag() {
   const divCantidadTotal = document.getElementById("divCantidadTotal");
   const divCantidad = document.getElementById("divCantidad");
   const divIncDate = document.getElementById("divIncDate");
+  const divfechaReceive = document.getElementById("divfechaReceive");
+  const divIncSec = document.getElementById("divIncSec");
 
   const divEstandar = document.getElementById("divEstandar");
 
@@ -136,6 +138,9 @@ function readQRTag() {
     button_personalizar.hidden = true;
     button_generar.disabled = false;
     button_personalizar.disabled = false;
+
+    divfechaReceive.hidden = true;
+    divIncSec.hidden = true;
   } else {
     rc.addEventListener("input", activateOperation);
     rc.addEventListener("input", changeLot);
@@ -144,6 +149,7 @@ function readQRTag() {
     fechayturno.hidden = false;
     button_generar.hidden = false;
     button_personalizar.hidden = false;
+    // divfechaReceive.hidden = true;
   }
   activar = !activar;
 }
@@ -701,4 +707,52 @@ const obtenerFechaImp = (fecha = "01/01/2000") => {
   return formattedDate;
 };
 
-// console.log(sumarUnDia("01/01/2000")); // Resultado: 02/01/2000
+function agregarLetraConsecutiva(num) {
+  // Expresión regular para detectar si el último carácter es una letra o letras
+  let regex = /[A-Z]+$/;
+  
+  if (regex.test(num)) {
+      // Separar la parte numérica de las letras al final
+      let parteNumerica = num.match(/^\d+/)[0];
+      let letras = num.match(/[A-Z]+$/)[0];
+      
+      // Incrementar las letras
+      let siguienteLetra = incrementarLetras(letras);
+      
+      // Retornar el número con las nuevas letras
+      return parteNumerica + siguienteLetra;
+  } else {
+      // Si no tiene letras, agregar "A"
+      return num + 'A';
+  }
+}
+
+function incrementarLetras(letras) {
+  let arrLetras = letras.split('');
+  
+  // Comenzar por la última letra
+  for (let i = arrLetras.length - 1; i >= 0; i--) {
+      if (arrLetras[i] === 'Z') {
+          arrLetras[i] = 'A'; // Cambiar Z a A y continuar al siguiente carácter
+      } else {
+          arrLetras[i] = String.fromCharCode(arrLetras[i].charCodeAt(0) + 1); // Incrementar la letra
+          return arrLetras.join(''); // Retornar si no hay más que procesar
+      }
+  }
+  
+  // Si todas eran Z, agregar una A al principio
+  return 'A' + arrLetras.join('');
+}
+
+// // Ejemplos de uso:
+// let num1 = "0005";
+// let num2 = "0005B";
+// let num3 = "0005Z";
+// let num4 = "0005AZ";
+// let num5 = "0005ZZ";
+
+// console.log(agregarLetraConsecutiva(num1)); // "0005A"
+// console.log(agregarLetraConsecutiva(num2)); // "0005C"
+// console.log(agregarLetraConsecutiva(num3)); // "0005AA"
+// console.log(agregarLetraConsecutiva(num4)); // "0005BA"
+// console.log(agregarLetraConsecutiva(num5)); // "0005AAA"
