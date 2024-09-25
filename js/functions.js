@@ -149,7 +149,6 @@ function readQRTag() {
     fechayturno.hidden = false;
     button_generar.hidden = false;
     button_personalizar.hidden = false;
-    // divfechaReceive.hidden = true;
   }
   activar = !activar;
 }
