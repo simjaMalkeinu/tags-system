@@ -272,10 +272,10 @@ function validateForm() {
   }
 
   if (activar === false) {
-    if (cantidadTotal === "" || cantidadTotal.trim() === "") {
+    if (cantidadTotal === "" || cantidadTotal.trim() === "" || cantidadTotal == 0) {
       document.getElementById("cantidadTotal").classList.add("is-invalid");
       showAlert(
-        "La <strong>CANTIDAD TOTAL</strong> no puede estar vacia",
+        "La <strong>CANTIDAD TOTAL</strong> no puede estar vacia o ser igual a 0",
         "danger"
       );
       return false;
@@ -296,10 +296,10 @@ function validateForm() {
       }
     }
   } else {
-    if (cantidad === "" || cantidad.trim() === "") {
+    if (cantidad === "" || cantidad.trim() === "" || cantidad == 0) {
       document.getElementById("cantidad").classList.add("is-invalid");
 
-      showAlert("La <strong>CANTIDAD </strong> no puede estar vacia", "danger");
+      showAlert("La <strong>CANTIDAD </strong> no puede estar vacia o ser igual a 0", "danger");
       return false;
     } else {
       // Expresión regular para validar si es un número entero o flotante
@@ -333,10 +333,10 @@ function validateForm() {
     document.getElementById("op").classList.add("is-valid");
   }
 
-  if (operacion.trim() % 10 !== 0) {
+  if (operacion.trim() % 10 !== 0  || operacion == 0) {
     document.getElementById("op").classList.add("is-invalid");
     showAlert(
-      "La <strong>OPERACION</strong> debe ser multiplo de <strong>10</strong>",
+      "La <strong>OPERACION</strong> debe ser multiplo de <strong>10</strong> y diferente de 0",
       "danger"
     );
     return false;
@@ -345,11 +345,11 @@ function validateForm() {
     document.getElementById("op").classList.add("is-valid");
   }
 
-  if ((estandar === "" || estandar.trim() === "") && activar === false) {
+  if ((estandar === "" || estandar.trim() === "" || estandar == 0) && activar === false) {
     document.getElementById("estandar").classList.add("is-invalid");
 
     showAlert(
-      "La <strong>CANTIDAD DE CAJAS</strong> no puede estar vacia",
+      "La <strong>CANTIDAD DE CAJAS</strong> no puede estar vacia o ser igual a 0",
       "danger"
     );
     return false;
