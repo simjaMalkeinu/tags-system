@@ -188,6 +188,7 @@ function getData() {
   const qrContainer = document.getElementById("qrContainer");
 
   rc = rc.trim();
+  // lote = encodeURIComponent(lote.trim());
   lote = lote.trim();
   cantidad = cantidad.trim();
   operacion = operacion.trim();
@@ -565,6 +566,7 @@ function generateQR() {
     text: qrText,
     width: 128,
     height: 128,
+    correctLevel: QRCode.CorrectLevel.H
   });
 }
 
