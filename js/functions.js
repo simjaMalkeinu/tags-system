@@ -273,7 +273,11 @@ function validateForm() {
   }
 
   if (activar === false) {
-    if (cantidadTotal === "" || cantidadTotal.trim() === "" || cantidadTotal == 0) {
+    if (
+      cantidadTotal === "" ||
+      cantidadTotal.trim() === "" ||
+      cantidadTotal == 0
+    ) {
       document.getElementById("cantidadTotal").classList.add("is-invalid");
       showAlert(
         "La <strong>CANTIDAD TOTAL</strong> no puede estar vacia o ser igual a 0",
@@ -300,7 +304,10 @@ function validateForm() {
     if (cantidad === "" || cantidad.trim() === "" || cantidad == 0) {
       document.getElementById("cantidad").classList.add("is-invalid");
 
-      showAlert("La <strong>CANTIDAD </strong> no puede estar vacia o ser igual a 0", "danger");
+      showAlert(
+        "La <strong>CANTIDAD </strong> no puede estar vacia o ser igual a 0",
+        "danger"
+      );
       return false;
     } else {
       // Expresión regular para validar si es un número entero o flotante
@@ -311,10 +318,7 @@ function validateForm() {
         document.getElementById("cantidad").classList.add("is-valid");
       } else {
         document.getElementById("cantidadTotal").classList.add("is-invalid");
-        showAlert(
-          "La <strong>CANTIDAD</strong> debe ser un numero",
-          "danger"
-        );
+        showAlert("La <strong>CANTIDAD</strong> debe ser un numero", "danger");
         return false;
       }
     }
@@ -326,27 +330,27 @@ function validateForm() {
       showAlert("La <strong>OPERACION</strong> no puede estar vacia", "danger");
       return false;
     } else {
-      document.getElementById("op").classList.remove("is-invalid");
-      document.getElementById("op").classList.add("is-valid");
+      if (operacion.trim() % 10 !== 0 || operacion == 0) {
+        document.getElementById("op").classList.add("is-invalid");
+        showAlert(
+          "La <strong>OPERACION</strong> debe ser multiplo de <strong>10</strong> y diferente de 0",
+          "danger"
+        );
+        return false;
+      } else {
+        document.getElementById("op").classList.remove("is-invalid");
+        document.getElementById("op").classList.add("is-valid");
+      }
     }
   } else {
     document.getElementById("op").classList.remove("is-invalid");
     document.getElementById("op").classList.add("is-valid");
   }
 
-  if (operacion.trim() % 10 !== 0  || operacion == 0) {
-    document.getElementById("op").classList.add("is-invalid");
-    showAlert(
-      "La <strong>OPERACION</strong> debe ser multiplo de <strong>10</strong> y diferente de 0",
-      "danger"
-    );
-    return false;
-  } else {
-    document.getElementById("op").classList.remove("is-invalid");
-    document.getElementById("op").classList.add("is-valid");
-  }
-
-  if ((estandar === "" || estandar.trim() === "" || estandar == 0) && activar === false) {
+  if (
+    (estandar === "" || estandar.trim() === "" || estandar == 0) &&
+    activar === false
+  ) {
     document.getElementById("estandar").classList.add("is-invalid");
 
     showAlert(
@@ -354,7 +358,7 @@ function validateForm() {
       "danger"
     );
     return false;
-  } 
+  }
   // else {
   //   // Expresión regular para validar si es un número entero o flotante
   //   var numberPattern = /^-?\d+(\.\d+)?$/;
@@ -566,7 +570,7 @@ function generateQR() {
     text: qrText,
     width: 128,
     height: 128,
-    correctLevel: QRCode.CorrectLevel.H
+    correctLevel: QRCode.CorrectLevel.H,
   });
 }
 
@@ -711,38 +715,38 @@ const obtenerFechaImp = (fecha = "01/01/2000") => {
 function agregarLetraConsecutiva(num) {
   // Expresión regular para detectar si el último carácter es una letra o letras
   let regex = /[A-Z]+$/;
-  
+
   if (regex.test(num)) {
-      // Separar la parte numérica de las letras al final
-      let parteNumerica = num.match(/^\d+/)[0];
-      let letras = num.match(/[A-Z]+$/)[0];
-      
-      // Incrementar las letras
-      let siguienteLetra = incrementarLetras(letras);
-      
-      // Retornar el número con las nuevas letras
-      return parteNumerica + siguienteLetra;
+    // Separar la parte numérica de las letras al final
+    let parteNumerica = num.match(/^\d+/)[0];
+    let letras = num.match(/[A-Z]+$/)[0];
+
+    // Incrementar las letras
+    let siguienteLetra = incrementarLetras(letras);
+
+    // Retornar el número con las nuevas letras
+    return parteNumerica + siguienteLetra;
   } else {
-      // Si no tiene letras, agregar "A"
-      return num + 'A';
+    // Si no tiene letras, agregar "A"
+    return num + "A";
   }
 }
 
 function incrementarLetras(letras) {
-  let arrLetras = letras.split('');
-  
+  let arrLetras = letras.split("");
+
   // Comenzar por la última letra
   for (let i = arrLetras.length - 1; i >= 0; i--) {
-      if (arrLetras[i] === 'Z') {
-          arrLetras[i] = 'A'; // Cambiar Z a A y continuar al siguiente carácter
-      } else {
-          arrLetras[i] = String.fromCharCode(arrLetras[i].charCodeAt(0) + 1); // Incrementar la letra
-          return arrLetras.join(''); // Retornar si no hay más que procesar
-      }
+    if (arrLetras[i] === "Z") {
+      arrLetras[i] = "A"; // Cambiar Z a A y continuar al siguiente carácter
+    } else {
+      arrLetras[i] = String.fromCharCode(arrLetras[i].charCodeAt(0) + 1); // Incrementar la letra
+      return arrLetras.join(""); // Retornar si no hay más que procesar
+    }
   }
-  
+
   // Si todas eran Z, agregar una A al principio
-  return 'A' + arrLetras.join('');
+  return "A" + arrLetras.join("");
 }
 
 // // Ejemplos de uso:
